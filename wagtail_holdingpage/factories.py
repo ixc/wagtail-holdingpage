@@ -1,6 +1,6 @@
 from typing import Generic, TypeVar
 
-from factory import DjangoModelFactory
+from factory.django import DjangoModelFactory
 from factory.base import FactoryMetaClass
 
 from wagtail_holdingpage.models import (HoldingPageAllowedPage,

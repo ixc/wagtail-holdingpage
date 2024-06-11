@@ -115,7 +115,7 @@ class HoldingPageMiddlewareTestCase(HoldingPageTestMixin, TestCase):
             response = self.assertHoldingPage("/", holdingpage_url)
             self.assertEqual(
                 response["Cache-Control"],
-                "max-age=0, no-cache, no-store, must-revalidate",
+                "max-age=0, no-cache, no-store, must-revalidate, private",
             )
 
     @data(
@@ -307,9 +307,9 @@ class SettingsTest(HoldingPageTestMixin, AdminTest):
             include_descendants=include_descendants,
         )
         expected_url = (
-            re.compile(f"^{self.home_page.url}")
+            re.compile(f"^/")
             if include_descendants
-            else re.compile(f"^{self.home_page.url}$")
+            else re.compile(f"^/$")
         )
         self.assertTrue(expected_url in settings.allowed_url_regexes())
 
