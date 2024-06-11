@@ -3,8 +3,7 @@ from typing import Generic, TypeVar
 from factory.django import DjangoModelFactory
 from factory.base import FactoryMetaClass
 
-from wagtail_holdingpage.models import (HoldingPageAllowedPage,
-                                        HoldingPageSettings)
+from wagtail_holdingpage.models import HoldingPageAllowedPage, HoldingPageSettings
 
 T = TypeVar("T")
 

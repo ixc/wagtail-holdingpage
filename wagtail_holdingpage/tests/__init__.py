@@ -11,8 +11,10 @@ from django.test import TestCase, override_settings
 from wagtail.core.models import Page, Site
 
 from wagtail_holdingpage import holdingpage_registry
-from wagtail_holdingpage.factories import (HoldingPageAllowedPageFactory,
-                                           HoldingPageSettingsFactory)
+from wagtail_holdingpage.factories import (
+    HoldingPageAllowedPageFactory,
+    HoldingPageSettingsFactory,
+)
 from wagtail_holdingpage.hooks import allow_staff
 from wagtail_holdingpage.tests.testapp.views import another_view
 
@@ -306,11 +308,7 @@ class SettingsTest(HoldingPageTestMixin, AdminTest):
             page=self.home_page,
             include_descendants=include_descendants,
         )
-        expected_url = (
-            re.compile(f"^/")
-            if include_descendants
-            else re.compile(f"^/$")
-        )
+        expected_url = re.compile(f"^/") if include_descendants else re.compile(f"^/$")
         self.assertTrue(expected_url in settings.allowed_url_regexes())
 
     @data(True, False)
