@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from django.core.cache import cache
 from django.core.management import call_command
 from django.test import TestCase, override_settings
-from wagtail.core.models import Page, Site
+from wagtail.models import Page, Site
 
 from australian_museum.common.constants import HOME_PAGE
 from australian_museum.factories import (
@@ -85,7 +85,6 @@ class HoldingPageTestMixin:
 @ddt
 @override_settings(
     ROOT_URLCONF="wagtail_holdingpage.tests.urls",
-    INSTALLED_APPS=settings.INSTALLED_APPS + ["wagtail_holdingpage.tests.testapp"],
     HOLDINGPAGE_ALLOWED_VIEWS=["wagtail_holdingpage.tests.testapp.views.a_view"],
     HOLDINGPAGE_TEMPLATE_NAME="wagtail_holdingpage/holdingpage.html",
 )
@@ -228,7 +227,6 @@ class HoldingPageMiddlewareTestCase(HoldingPageTestMixin, TestCase):
 @ddt
 @override_settings(
     ROOT_URLCONF="wagtail_holdingpage.tests.urls",
-    INSTALLED_APPS=settings.INSTALLED_APPS + ["wagtail_holdingpage.tests.testapp"],
     HOLDINGPAGE_ALLOWED_VIEWS=["wagtail_holdingpage.tests.testapp.views.a_view"],
     HOLDINGPAGE_TEMPLATE_NAME="wagtail_holdingpage/holdingpage.html",
 )

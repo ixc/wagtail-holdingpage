@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.urls import NoReverseMatch, Resolver404, get_resolver
-from wagtail.core.models import Site
+from wagtail.models import Site
 
 from wagtail_holdingpage.hooks import allow_staff
 from wagtail_holdingpage.models import HoldingPageSettings
