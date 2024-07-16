@@ -42,7 +42,7 @@ class HoldingPageMiddleware:
                 return True
         return False
 
-    def process_view(self, request, view_func, view_args, view_kwargs):
+    def process_view(self, request, view_func, view_args, view_kwargs):  # noqa C901
         from wagtail_holdingpage import holdingpage_registry
         from wagtail_holdingpage.decorators import AllowedView
 
