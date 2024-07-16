@@ -4,13 +4,10 @@ from http import HTTPStatus
 import wagtail_factories
 from ddt import data, ddt
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.core.cache import cache
-from django.core.management import call_command
 from django.test import TestCase, override_settings
 from wagtail.models import Page, Site
 
-from australian_museum.common.constants import HOME_PAGE
 from australian_museum.factories import (
     AmHomePageFactory,
     BasicPageFactory,
@@ -18,13 +15,12 @@ from australian_museum.factories import (
     SuperAdminFactory,
     UserFactory,
 )
-from australian_museum.tests.testing_lib import AdminTest, SimpleTest
+from australian_museum.tests.testing_lib import AdminTest
 from wagtail_holdingpage import holdingpage_registry
 from wagtail_holdingpage.factories import (
     HoldingPageAllowedPageFactory,
     HoldingPageSettingsFactory,
 )
-from wagtail_holdingpage.hooks import allow_staff
 from wagtail_holdingpage.tests.testapp.views import another_view
 
 
@@ -53,7 +49,7 @@ class HoldingPageTestMixin:
         # Should render the holding page template, for any url.
         response = self.client.get(url, follow=True)
         holdingpage_url = getattr(settings, "HOLDINGPAGE_URL", None)
-        self.assertEquals(response.redirect_chain, [(holdingpage_url, 302)])
+        self.assertEqual(response.redirect_chain, [(holdingpage_url, 302)])
         self.assertContains(
             response,
             text="This is a holding page",
@@ -237,18 +233,14 @@ class SettingsTest(HoldingPageTestMixin, AdminTest):
 
     def get_edit_instance_path(self, instance):
         """example: /admin/settings/wagtail_holdingpage/holdingpagesettings/888/"""
-        return "{admin_path}{model_path}{site_id}/".format(
-            admin_path=self.admin_path,
-            model_path=self.model_path,
-            site_id=instance.site_id,
-        )
+        return f"{self.admin_path}{self.model_path}{instance.site_id}/"
 
     @data(
         True,
         False,
     )
     def test_holding_page_active(self, holdingpage_active):
-        settings = HoldingPageSettingsFactory(
+        HoldingPageSettingsFactory(
             site=self.site, holdingpage_active=holdingpage_active
         )
         holdingpage_registry.load_settings()
@@ -262,7 +254,7 @@ class SettingsTest(HoldingPageTestMixin, AdminTest):
         False,
     )
     def test_allow_staff(self, allow_staff):
-        settings = HoldingPageSettingsFactory(
+        HoldingPageSettingsFactory(
             site=self.site, holdingpage_active=True, allow_staff=allow_staff
         )
         holdingpage_registry.load_settings()
@@ -299,23 +291,23 @@ class SettingsTest(HoldingPageTestMixin, AdminTest):
         self.assertEqual(response.status_code, 200)
 
     @override_settings(IS_ADMIN_SITE=True)
-    def test_settings__can_allow_pages(self):
+    def test_settings__can_allow_pages_admin(self):
         settings = HoldingPageSettingsFactory(site=self.site, holdingpage_active=False)
         response, form = self.get_edit_instance_as_admin(
             instance=settings, admin=self.staff_user
         )
-        self.assertTrue("holdingpage_allowed_pages-TOTAL_FORMS" in form.fields.keys())
+        self.assertTrue("allowed_pages-TOTAL_FORMS" in form.fields)
 
     @data(True, False)
     @override_settings(IS_ADMIN_SITE=True)
     def test_settings__can_allow_pages(self, include_descendants):
         settings = HoldingPageSettingsFactory(site=self.site, holdingpage_active=False)
-        allowed_page = HoldingPageAllowedPageFactory(
+        HoldingPageAllowedPageFactory(
             settings=settings,
             page=self.home_page,
             include_descendants=include_descendants,
         )
-        expected_url = re.compile(f"^/") if include_descendants else re.compile(f"^/$")
+        expected_url = re.compile("^/") if include_descendants else re.compile("^/$")
         self.assertTrue(expected_url in settings.allowed_url_regexes())
 
     @data(True, False)
