@@ -7,7 +7,7 @@ class AlreadyRegistered(Exception):
     pass
 
 
-class HoldingPageRegistry(object):
+class HoldingPageRegistry:
     def __init__(self):
         self._reset()
 

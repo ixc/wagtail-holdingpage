@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.urls import NoReverseMatch, Resolver404, get_resolver
-from wagtail.core.models import Site
+from wagtail.models import Site
 
 from wagtail_holdingpage.hooks import allow_staff
 from wagtail_holdingpage.models import HoldingPageSettings
@@ -42,7 +42,7 @@ class HoldingPageMiddleware:
                 return True
         return False
 
-    def process_view(self, request, view_func, view_args, view_kwargs):
+    def process_view(self, request, view_func, view_args, view_kwargs):  # noqa C901
         from wagtail_holdingpage import holdingpage_registry
         from wagtail_holdingpage.decorators import AllowedView
 

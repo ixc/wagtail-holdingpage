@@ -4,8 +4,8 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
-from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, PageChooserPanel
-from wagtail.contrib.settings.models import BaseSetting
+from wagtail.admin.panels import FieldPanel, InlinePanel
+from wagtail.contrib.settings.models import BaseSiteSetting
 from wagtail.contrib.settings.registry import register_setting
 
 
@@ -32,13 +32,16 @@ class HoldingPageAllowedPage(models.Model):
     )
 
     panels = [
-        PageChooserPanel("page"),
+        FieldPanel("page"),
         FieldPanel("include_descendants"),
     ]
 
+    def __str__(self):
+        return f"{self.page} allowed for {self.settings}"
+
 
 @register_setting
-class HoldingPageSettings(ClusterableModel, BaseSetting):
+class HoldingPageSettings(ClusterableModel, BaseSiteSetting):
     """Settings for HoldingPage mode"""
 
     holdingpage_active = models.BooleanField(
