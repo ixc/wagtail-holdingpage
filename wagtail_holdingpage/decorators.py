@@ -8,7 +8,7 @@ def allowed_view(view_func):
     return AllowedView(view_func)
 
 
-class AllowedView(object):
+class AllowedView:
     def __init__(self, view_func):
         self.view_func = view_func
         update_wrapper(self, view_func)
