@@ -2,11 +2,100 @@
 name = "wagtail-holdingpage"
 version = "0.1.0"
 authors = [
-    { name = "Cameron Simpson", email = "cs@cskk.id.au" }
+    { name = "The Interaction Consortium", email = "studio@interaction.net.au" },
 ]
-requires-python = ">=3.14"
-dependencies = []
+maintainers = [
+    { name = "The Interaction Consortium", email = "studio@interaction.net.au" },
+]
+requires-python = ">=3.12"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: End Users/Desktop",
+    "Environment :: Web Environment",
+    "Framework :: Django",
+    "Framework :: Django :: 3.2",
+    "Framework :: Django :: 4.2",
+    "Framework :: Django :: 5.1",
+    "Framework :: Wagtail",
+    "Framework :: Wagtail :: 6",
+    "Framework :: Wagtail :: 7",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Utilities",
+]
+dependencies = [
+    "django>=5.2,<5.3",
+    "wagtail>=7.4,<7.5",
+    # testing
+    "wagtail-factories",
+    "ddt",
+]
+
+[project.urls]
+homepage = "https://github.com/ixc/wagtail-holdingpage"
+issues = "https://github.com/ixc/wagtail-holdingpage/issues"
+repository = "https://github.com/ixc/wagtail-holdingpage.git"
 
 [build-system]
 requires = ["uv_build>=0.12.3,<0.13.0"]
 build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "wagtail_holdingpage"
+module-root = ""
+
+[tool.ruff]
+# Python 3.12
+target-version = "py312"
+
+extend-exclude = [
+    '.worktrees/**',
+    '**/migrations/*',
+]
+
+[tool.ruff.lint.mccabe]
+# Flag errors (`C901`) whenever the complexity level exceeds 5.
+max-complexity = 10
+
+[tool.ruff.lint]
+select = [
+    # pycodestyle
+    "E",
+    # pycodestyle warnings
+    "W",
+
+    # Pyflakes
+    "F",
+    # pyupgrade
+
+    ## Flake8 plugins
+    "UP",
+    # flake8-bugbear
+    "B",
+    # flake8-comprehensions
+    "C",
+    # flake8-django
+    "DJ",
+    # flake8-bandit
+    "S",
+    # flake8-simplify
+    "SIM",
+
+    # isort
+    "I",
+    # McCabe complexity
+    "C901",
+]
+
+ignore = [
+    # Ignore Pycodestyle line-length warnings, if black doesn't fix them.
+    # (it mainly seems to be long comments)
+    "E501",
+]
+
+[tool.ruff.lint.per-file-ignores]
