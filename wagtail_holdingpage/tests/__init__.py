@@ -7,15 +7,6 @@ from django.conf import settings
 from django.core.cache import cache
 from django.test import TestCase, override_settings
 from wagtail.models import Page, Site
-
-from australian_museum.factories import (
-    AmHomePageFactory,
-    BasicPageFactory,
-    RootPageFactory,
-    SuperAdminFactory,
-    UserFactory,
-)
-from australian_museum.tests.testing_lib import AdminTest
 from wagtail_holdingpage import holdingpage_registry
 from wagtail_holdingpage.factories import (
     HoldingPageAllowedPageFactory,
@@ -37,7 +28,7 @@ class HoldingPageTestMixin:
         self.root_page = RootPageFactory.create()
         self.home_page = AmHomePageFactory(parent=self.root_page, title="Homepage")
         self.site = wagtail_factories.SiteFactory(
-            site_name="Australian Museum",
+            site_name="Example Site",
             root_page=self.home_page,
             is_default_site=True,  # important
             port=8000,
