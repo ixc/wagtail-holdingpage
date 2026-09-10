@@ -2,10 +2,8 @@
 
 Proudly supported by the [Australian Museum](https://australian.museum/).
 
-A widget for Wagtail's admin that In the AM project here:
-https://github.com/ixc/am/tree/main/wagtail_holdingpage we have an
-app called Wagtail Holdingpage. That gives you an admin interface
-to control turning 'holding page mode' on and off for your website
+A widget for Wagtail's admin that gives you an admin interface to
+control turning 'holding page mode' on and off for your website
 while you deploy and test updates.
 
 ## Use
