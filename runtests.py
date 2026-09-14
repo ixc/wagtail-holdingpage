@@ -1,0 +1,77 @@
+import sys
+
+import django
+from django.conf import settings
+from django.test.utils import get_runner
+
+settings.configure(
+    **{
+        "DATABASES": {
+            "default": {"ENGINE": "django.db.backends.sqlite3", "NAME": "test.db"}
+        },
+        "INSTALLED_APPS": (
+            "wagtail_holdingpage",
+            "wagtail_holdingpage.tests.test_app",
+            "django.contrib.admin",
+            "django.contrib.auth",
+            "django.contrib.contenttypes",
+            "django.contrib.sessions",
+            "django.contrib.messages",
+            "wagtail.admin",
+            "wagtail",
+            "wagtail_modeladmin",
+            "wagtail.contrib.settings",
+            "wagtail.users",
+            "wagtail.documents",
+            "wagtail.images",
+            "taggit",
+        ),
+        "TEMPLATES": [
+            {
+                "BACKEND": "django.template.backends.django.DjangoTemplates",
+                "DIRS": [],
+                # 'APP_DIRS': True,  # Must not be set when `loaders` is defined
+                "OPTIONS": {
+                    "context_processors": [
+                        "django.template.context_processors.debug",
+                        "django.template.context_processors.request",
+                        "django.contrib.auth.context_processors.auth",
+                        "django.contrib.messages.context_processors.messages",
+                    ],
+                    "loaders": [
+                        "django.template.loaders.filesystem.Loader",
+                        "django.template.loaders.app_directories.Loader",
+                    ],
+                },
+            }
+        ],
+        "MIDDLEWARE": (
+            "django.middleware.security.SecurityMiddleware",
+            "django.contrib.sessions.middleware.SessionMiddleware",
+            "django.middleware.common.CommonMiddleware",
+            "django.middleware.csrf.CsrfViewMiddleware",
+            "django.contrib.auth.middleware.AuthenticationMiddleware",
+            "django.contrib.messages.middleware.MessageMiddleware",
+            "django.middleware.clickjacking.XFrameOptionsMiddleware",
+        ),
+        "STATIC_URL": "/static/",
+        "ROOT_URLCONF": "wagtail_holdingpage.tests.urls",
+        "WAGTAIL_SITE_NAME": "test",
+        "SECRET_KEY": "fake-key",
+        "WAGTAILADMIN_BASE_URL": "http://localhost:8000",
+        "TASKS": {
+            "default": {
+                "BACKEND": "django_tasks.backends.dummy.DummyBackend",
+            }
+        },
+    }
+)
+
+
+django.setup()
+
+
+TestRunner = get_runner(settings)
+test_runner = TestRunner(verbosity=1, interactive=True)
+failures = test_runner.run_tests(["wagtail_holdingpage.tests"])
+sys.exit(failures)
