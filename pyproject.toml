@@ -1,7 +1,10 @@
 [project]
 name = "wagtail-holdingpage"
-version = "0.1.0"
+version = "0.1.1"
 licence = "MIT"
+license-files = ["LICENSE"]
+description = "A widget for Wagtail's admin that gives you an admin interface to control turning 'holding page mode' on and off for your website while you deploy and test updates."
+readme = "README.md"
 authors = [
     { name = "The Interaction Consortium", email = "studio@interaction.net.au" },
 ]
@@ -44,6 +47,12 @@ repository = "https://github.com/ixc/wagtail-holdingpage.git"
 [build-system]
 requires = ["uv_build>=0.12.3,<0.13.0"]
 build-backend = "uv_build"
+
+[[tool.uv.index]]
+name = "testpypi"
+url = "https://test.pypi.org/simple/"
+publish-url = "https://test.pypi.org/legacy/"
+explicit = true
 
 [tool.uv.build-backend]
 module-name = "wagtail_holdingpage"
