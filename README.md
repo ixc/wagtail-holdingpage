@@ -39,7 +39,7 @@ HOLDINGPAGE_ALLOWED_URL_PATTERNS = [
 ]
 ```
 
- Optionally, create additional hooks to allow certain requests to bypass the holding page. See `hooks.py` for an example. `HoldingpageSettings` allows you to control whether the `allow_staff` hook is enabled via the Wagtail admin. Alternatively, you can configure it to be always enabled via `HOLDINGPAGE_HOOKS` (overrides the admin setting).
+Optionally, create additional hooks to allow certain requests to bypass the holding page. See `hooks.py` for an example. `HoldingpageSettings` allows you to control whether the `allow_staff` hook is enabled via the Wagtail admin. Alternatively, you can configure it to be always enabled via `HOLDINGPAGE_HOOKS` (overrides the admin setting).
 
 ```python
 HOLDINGPAGE_HOOKS = [
