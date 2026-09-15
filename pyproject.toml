@@ -34,7 +34,10 @@ classifiers = [
 dependencies = [
     "django>=5.2,<5.3",
     "wagtail>=7.4,<7.5",
-    # testing
+]
+
+[dependency-groups]
+test = [
     "wagtail-factories",
     "ddt",
 ]
