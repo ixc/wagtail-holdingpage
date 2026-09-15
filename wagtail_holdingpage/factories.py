@@ -25,3 +25,19 @@ class HoldingPageAllowedPageFactory(
 ):
     class Meta:
         model = HoldingPageAllowedPage
+
+
+class SuperAdminFactory(DjangoModelFactory):
+    username = "superadmin"
+    is_staff = True
+    is_superuser = True
+
+    class Meta:
+        model = "auth.User"
+
+
+class UserFactory(DjangoModelFactory):
+    username = "user"
+
+    class Meta:
+        model = "auth.User"

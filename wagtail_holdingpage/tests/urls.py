@@ -1,9 +1,11 @@
 from django.urls import include, path, re_path
 from wagtail import urls as wagtail_urls
+from wagtail.admin import urls as wagtail_admin_urls
 
 from wagtail_holdingpage.tests.testapp import views
 
 urlpatterns = [
+    path("admin/", include(wagtail_admin_urls)),
     path("", views.index),
     re_path(r"^a_path/", views.a_view),
     re_path(r"^another_path/", views.another_view),
