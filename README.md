@@ -33,9 +33,9 @@ Optionally, add the following settings to your settings file, for example:
 
 ```python
 HOLDINGPAGE_ALLOWED_URL_PATTERNS = [
-    '^/admin/*',
-    '^/robots.txt',
-    '/favicon.ico',
+    "^/admin/*",
+    "^/robots.txt",
+    "/favicon.ico",
 ]
 ```
 
@@ -43,12 +43,12 @@ Optionally, create additional hooks to allow certain requests to bypass the hold
 
 ```python
 HOLDINGPAGE_HOOKS = [
-    'myapp.hooks.my_hook',
+    "myapp.hooks.my_hook",
 ]
 ```
 
 Optionally, set `HOLDINGPAGE_REDIRECT_URL` in your Django settings to specify a URL to which visitors should be 302 redirected when the holding page is active. This can be useful if the holding page is external, but note that visitors may remain on that redirect destination and simply refresh it and so they'll never know when holding page mode is turned off. You might want to redirect them back to the main site once the holding page mode is turned off.
 
 ```python
-HOLDINGPAGE_REDIRECT_URL = 'https://otherdomain.com/maintenance/'
+HOLDINGPAGE_REDIRECT_URL = "https://otherdomain.com/maintenance/"
 ```

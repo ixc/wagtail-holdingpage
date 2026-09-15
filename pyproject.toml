@@ -41,6 +41,18 @@ test = [
     "wagtail-factories",
     "ddt",
 ]
+dev = [
+    "ruff",
+]
+
+[project.optional-dependencies]
+testing = [
+    "wagtail-factories",
+    "ddt",
+]
+dev = [
+    "ruff",
+]
 
 [project.urls]
 homepage = "https://github.com/ixc/wagtail-holdingpage"
@@ -50,6 +62,9 @@ repository = "https://github.com/ixc/wagtail-holdingpage.git"
 [build-system]
 requires = ["uv_build>=0.12.3,<0.13.0"]
 build-backend = "uv_build"
+
+[tool.uv]
+default-groups = ["test", "dev"]
 
 ##[[tool.uv.index]]
 ##name = "testpypi"
