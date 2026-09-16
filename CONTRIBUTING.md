@@ -8,3 +8,4 @@ We release from the `main` branch`:
 - remove out the `dist` subdirectory if it's present
 - `mkdir dist && uv build && uv publish`
 - `git push --tags` to push the released tag up
+- create a new release from github's code page for the new tag
