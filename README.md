@@ -15,7 +15,7 @@ maintenance page, but optionally allow some pages to behave as
 normal, or allow the site to behave as normal for admins. In your
 settings you can exclude certain URLs (eg `/admin`) from being affected.
 
-<img width="1103" height="1091" alt="Image" src="https://github.com/user-attachments/assets/c8b3bb09-91fd-498b-a74e-141de692bccd" />
+![Holding Page Settings Screenshot](./docs/images/holding_page_settings.png)
 
 ## Installation
 
