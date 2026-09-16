@@ -11,9 +11,10 @@ When 'holding page mode' is on, visitors will see the holding page template inst
 ## Use
 
 When holding page mode is on, it will display a nice-looking
-maintenance page, but optionally allow some pages to behave as
+maintenance page, but optionally allow some Wagtail pages to behave as
 normal, or allow the site to behave as normal for admins. In your
-settings you can exclude certain URLs (eg `/admin`) from being affected.
+settings file you can exclude certain URLs (eg `/admin`) or certain requests
+from being affected.
 
 ![Holding Page Settings Screenshot](./docs/images/holding_page_settings.png)
 
@@ -47,7 +48,7 @@ HOLDINGPAGE_HOOKS = [
 ]
 ```
 
-Optionally, set `HOLDINGPAGE_REDIRECT_URL` in your Django settings to specify a URL to which visitors should be 302 redirected when the holding page is active. This can be useful if the holding page is external, but note that visitors may remain on that redirect destination and simply refresh it and so they'll never know when holding page mode is turned off. You might want to redirect them back to the main site once the holding page mode is turned off.
+Optionally, set `HOLDINGPAGE_REDIRECT_URL` in your Django settings to specify a URL to which visitors should be 302 redirected when the holding page is active. This _can_ be useful if the holding page is external, but note that visitors may remain on that redirect destination and simply refresh it and so they'll never know when holding page mode is turned off. You might need a way to redirect them back to the main site once the holding page mode is turned off.
 
 ```python
 HOLDINGPAGE_REDIRECT_URL = "https://otherdomain.com/maintenance/"
