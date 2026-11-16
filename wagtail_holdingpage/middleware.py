@@ -50,13 +50,14 @@ class HoldingPageMiddleware:
         if not self.holdingpage_settings.holdingpage_active:
             return None
 
-        # Allow overriding the HOLDINGPAGE_HOOKS setting via the Wagtail setting
-        hooks = holdingpage_registry.hooks
+        # Allow overriding the HOLDINGPAGE_HOOKS setting via the Wagtail setting.
+        # Copy the list so the registry isn't mutated across requests.
+        hooks = list(holdingpage_registry.hooks)
         if self.holdingpage_settings.allow_staff and allow_staff not in hooks:
             hooks.append(allow_staff)
 
         # Allow access if one of the hooks returns True
-        for hook in holdingpage_registry.hooks:
+        for hook in hooks:
             if hook(request):
                 return None
 

@@ -4,7 +4,7 @@ from http import HTTPStatus
 import wagtail_factories
 from ddt import data, ddt
 from django.conf import settings
-from django.contrib.auth.models import User
+from django.contrib.auth.models import Group, Permission, User
 from django.core.cache import cache
 from django.test import TestCase, override_settings
 from wagtail.models import Page, Site
@@ -286,6 +286,47 @@ class SettingsTest(HoldingPageTestMixin, TestCase):
             self.assertHoldingPage("/", holdingpage_url=None)
             self.client.force_login(self.staff_user)
             self.assertHoldingPage("/", holdingpage_url=None)
+
+    def test_allow_staff_uses_wagtail_admin_access(self):
+        """Wagtail admin access, not Django's is_staff flag, bypasses the page."""
+        HoldingPageSettingsFactory(
+            site=self.site, holdingpage_active=True, allow_staff=True
+        )
+        holdingpage_registry.load_settings()
+
+        with self.subTest("Wagtail editor without is_staff"):
+            self.client.force_login(self.create_wagtail_editor(is_staff=False))
+            self.assertNormalPage("/")
+
+        with self.subTest("is_staff user without Wagtail admin access"):
+            self.client.force_login(
+                UserFactory.create(username="djangostaff", is_staff=True)
+            )
+            self.assertHoldingPage("/", holdingpage_url=None)
+
+    def test_unticking_allow_staff_takes_effect_immediately(self):
+        settings = HoldingPageSettingsFactory(
+            site=self.site, holdingpage_active=True, allow_staff=True
+        )
+        holdingpage_registry.load_settings()
+        self.client.force_login(self.staff_user)
+        self.assertNormalPage("/")
+
+        settings.allow_staff = False
+        settings.save()
+
+        self.assertHoldingPage("/", holdingpage_url=None)
+
+    def create_wagtail_editor(self, **kwargs):
+        editors = Group.objects.create(name="Holding page test editors")
+        editors.permissions.add(
+            Permission.objects.get(
+                content_type__app_label="wagtailadmin", codename="access_admin"
+            )
+        )
+        user = UserFactory.create(username="editor", **kwargs)
+        user.groups.add(editors)
+        return user
 
     @data(
         True,

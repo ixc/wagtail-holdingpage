@@ -49,7 +49,10 @@ class HoldingPageSettings(ClusterableModel, BaseSiteSetting):
     )
     allow_staff = models.BooleanField(
         default=False,
-        help_text="Allow staff to access the site, even with holding page enadled",
+        help_text=(
+            "Allow users with access to the Wagtail admin to see the site, "
+            "even with holding page enabled"
+        ),
     )
 
     panels = [
